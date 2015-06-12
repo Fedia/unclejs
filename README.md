@@ -2,9 +2,11 @@
 Uncle is a tiny (1.3k minzipped) virtual DOM library. Ya know React, right?
 
 What's different:
-* Should be easy to understand because of it's size
+* Should be easy to understand because of it's small code base
 * HTML templates - no JSX
-* Templates can be precompiled for production (TBD)
+* Templates can be precompiled for production (easy, TBD)
+
+[Live Demo](http://jsfiddle.net/asrsrqhr/) on JSFiddle
 
 ## Example
 ```javascript
@@ -53,7 +55,7 @@ Resulting function accepts two *optional* arguments: `render(some_value, index)`
 This can be used with native Array methods like `Array#map()`. In template's context both arguments are avaliable as `$value` and `$index` accordingly. If `some_value` is an object, it's properties are made avaliable as regular variables for convenience.
 
 ### uncle.update(containerElement)
-Allows any "renderable" component to update the real DOM. When you call `HelloMessage.update()`, it runs `this.render()`, conputes a diff between two virtual DOMs and patches the real one if needed.
+Allows any "renderable" component to update the real DOM. When you call `HelloMessage.update()`, it runs `this.render()`, computes a diff between two virtual DOMs and patches the real one if needed.
 ```javascript
 HelloMessage.update = uncle.update(document.body);
 HelloMessage.update(); 
