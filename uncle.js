@@ -106,29 +106,30 @@ window.uncle = (function() {
   }
 
   function key_map(children) {
-    var map = {};
+    var map = {keys:[], pos:{}};
     children.forEach(function(child, i) {
-      map[(child.attrs && child.attrs.hasOwnProperty('key'))? child.attrs.key : '#n' + i] = i;
+      var key = (child.attrs && child.attrs.hasOwnProperty('key'))? child.attrs.key : '#n' + i;
+      map.keys.push(key);
+      map.pos[key] = i;
     });
     return map;
   }
 
   function update_children(el, achildren, bchildren) {
-    var akeypos = key_map(achildren),
-        bkeypos = key_map(bchildren),
-        bkeys = Object.keys(bkeypos);
+    var amap = key_map(achildren),
+        bmap = key_map(bchildren);
     var nodes = Array.prototype.slice.call(el.childNodes),
         trash = nodes.slice(),
         insert = {}, node;
     var k, nk, apos, seqlen = 0;
-    for (var i = 0, l = bkeys.length; i < l; i++) {
-      k = bkeys[i];
-      nk = bkeys[i + 1];
-      apos = akeypos[k];
+    for (var i = 0, l = bmap.keys.length; i < l; i++) {
+      k = bmap.keys[i];
+      nk = bmap.keys[i + 1];
+      apos = amap.pos[k];
       if (apos === undefined) {
         seqlen = 0;
         insert[i] = create(bchildren[i]);
-      } else if (akeypos[nk] - apos === 1 || seqlen) {
+      } else if (amap.pos[nk] - apos === 1 || seqlen) {
         seqlen++;
         update(nodes[apos], achildren[apos], bchildren[i]);
         trash[apos] = null;
@@ -148,7 +149,7 @@ window.uncle = (function() {
       el.insertBefore(insert[i], el.childNodes[i]);
     }
   }
-
+  
   function update_attr(el, attr, val) {
     if (attr.charAt(0) === 'o') {
       // on* props
