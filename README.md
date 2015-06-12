@@ -40,9 +40,8 @@ Special attributes (or "directives"):
 * `html="raw  {{html}}"` - same as `innerHTML`
 
 ## API
-------
 ### uncle.render(html)
-Converts your template to a callable JS-function, which can render virtual DOM. It is stateless.
+Converts your template to a Javascript function, which renders virtual DOM.
 ```javascript
 var HelloMessage = {
   name: "Mr. Spock",
@@ -50,11 +49,11 @@ var HelloMessage = {
 };
 // HelloMessage.render() == {tag: "div", attrs:{}, children:[ "Hello ", HelloMessage.name ]}
 ```
-Resulting render function accepts two *optional* arguments: `render(some_value, index)`. This can be used with native Array methods like `Array#map()`. In template's context both arguments are avaliable as `$value` and `$index` accordingly. If **some_value** is an object, it's properties are made avaliable as regular variables for convenience.
-
+Resulting function accepts two *optional* arguments: `render(some_value, index)`.
+This can be used with native Array methods like `Array#map()`. In template's context both arguments are avaliable as `$value` and `$index` accordingly. If `some_value` is an object, it's properties are made avaliable as regular variables for convenience.
 
 ### uncle.update(containerElement)
-Allows any "renderable" component to update the real DOM. When you call `HelloMessage.update()`, it runs `this.render()`, makes a diff on virtual DOMs and patches the real one if needed. This function is stateful.
+Allows any "renderable" component to update the real DOM. When you call `HelloMessage.update()`, it runs `this.render()`, conputes a diff between two virtual DOMs and patches the real one if needed.
 ```javascript
 HelloMessage.update = uncle.update(document.body);
 HelloMessage.update(); 
