@@ -25,7 +25,7 @@ var TodoApp = {
   update: uncle.update(document.body) 
 };
 
-var TodoItem = uncle.render('<li class="todo-{{complete? 'complete' : 'active'}}" onclick="this.toggle($index)">{{text}}<li>');
+var TodoItem = uncle.render(`<li class="todo-{{complete? 'complete' : 'active'}}" onclick="this.toggle($index)">{{text}}<li>`);
 
 TodoApp.update();
 ```
